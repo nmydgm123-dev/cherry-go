@@ -1,10 +1,7 @@
 <view class="container">
   <view class="user-card">
     <view class="user-info">
-      <image
-        src="{{userInfo.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=cherrygo'}}"
-        class="avatar"
-      />
+      <view class="avatar-placeholder">🍒</view>
       <view class="user-detail">
         <text class="nickname">{{userInfo.nickname || '未登录'}}</text>
         <text wx:if="{{activeFarm}}" class="role-tag">当前果园：{{activeFarm.name}}</text>

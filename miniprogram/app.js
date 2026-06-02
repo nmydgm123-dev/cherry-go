@@ -17,11 +17,7 @@ App({
         traceUser: true
       })
     }
-    this.autoLogin().then(() => {
-      if (!this.globalData.isLoggedIn) {
-        this.login().catch(console.error)
-      }
-    })
+    this.autoLogin()
   },
 
   async autoLogin() {
@@ -32,6 +28,7 @@ App({
       this.globalData.activeFarmId = cached.activeFarmId || ''
       this.globalData.farmList = cached.farmList || []
       this.globalData.isLoggedIn = true
+      console.log('[autoLogin] 使用本地缓存登录成功')
     }
   },
 
@@ -55,7 +52,11 @@ App({
       const { code } = await wx.login()
       if (!code) throw new Error('wx.login 失败')
 
-      const res = await wx.cloud.callFunction({ name: 'login', data: { code } })
+      const res = await wx.cloud.callFunction({ 
+        name: 'login', 
+        data: { code },
+        timeout: 30000
+      })
       wx.hideLoading()
 
       if (res.result && res.result.code === 0) {
@@ -83,13 +84,21 @@ App({
           farmList
         })
 
+        console.log('[login] 登录成功')
         return { openid, userInfo, farmList, activeFarmId }
       } else {
         throw new Error(res.result?.message || '登录失败')
       }
     } catch (error) {
       wx.hideLoading()
-      console.error('[login] 失败', error)
+      console.error('[login] 登录失败', error)
+      
+      const cached = wx.getStorageSync('loginInfo')
+      if (cached && cached.openid) {
+        console.log('[login] 使用本地缓存降级')
+        return
+      }
+      
       wx.showToast({ title: '登录失败，请重试', icon: 'none' })
       throw error
     }

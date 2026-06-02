@@ -104,5 +104,38 @@ Page({
     if (!code) return
     wx.setClipboardData({ data: code })
     wx.showToast({ title: '邀请码已复制', icon: 'success' })
+  },
+
+  async leaveFarm() {
+    const farm = this.data.currentFarm
+    if (!farm) return
+    if (farm.role === 'owner') {
+      wx.showToast({ title: '果园主不能退出', icon: 'none' })
+      return
+    }
+    wx.showModal({
+      title: '退出果园',
+      content: '确定要退出该果园吗？',
+      success: async (res) => {
+        if (res.confirm) {
+          try {
+            const result = await wx.cloud.callFunction({
+              name: 'leaveFarm',
+              data: { farm_id: farm._id },
+              timeout: 15000
+            })
+            if (result.result && result.result.code === 0) {
+              wx.showToast({ title: '已退出', icon: 'success' })
+              await app.login()
+              this.loadData()
+            } else {
+              wx.showToast({ title: result.result?.message || '退出失败', icon: 'none' })
+            }
+          } catch (error) {
+            wx.showToast({ title: '请先部署云函数 leaveFarm', icon: 'none' })
+          }
+        }
+      }
+    })
   }
 })

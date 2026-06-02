@@ -1,0 +1,9 @@
+{
+  "name": "leaveFarm",
+  "version": "1.0.0",
+  "description": "退出果园",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

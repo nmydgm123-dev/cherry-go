@@ -10,6 +10,12 @@
   width: 60px; height: 60px; border-radius: 50%;
   background: rgba(255,255,255,0.2); margin-right: 12px;
 }
+.avatar-placeholder {
+  width: 60px; height: 60px; border-radius: 50%;
+  background: rgba(255,255,255,0.2); margin-right: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+}
 .user-detail { flex: 1; }
 .nickname { display: block; font-size: 20px; font-weight: 600; color: #fff; margin-bottom: 4px; }
 .role-tag {
@@ -39,16 +45,4 @@
 .logout-btn {
   width: 100%; padding: 12px; background: #fff;
   border-radius: 12px; text-align: center; font-size: 15px; color: #E74C3C;
-}
-
-/* ===== 测试工具 ===== */
-.test-section { margin-top: 8px; }
-.section-header {
-  display: flex; align-items: center; gap: 6px; margin-bottom: 12px;
-}
-.section-icon { font-size: 16px; }
-.section-title { font-size: 15px; font-weight: 600; color: #333; }
-.test-section .menu-group {
-  background: #fff8e1; border: 1px dashed #ffc107;
-  border-radius: 12px; overflow: hidden;
 }

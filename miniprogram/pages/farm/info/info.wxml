@@ -72,6 +72,10 @@
             <text wx:if="{{!loading}}">加载详情</text>
             <text wx:else>加载中...</text>
           </view>
+
+          <view wx:if="{{currentFarm && currentFarm.role !== 'owner'}}" class="leave-btn" bindtap="leaveFarm">
+            <text>退出果园</text>
+          </view>
         </view>
       </view>
     </view>
