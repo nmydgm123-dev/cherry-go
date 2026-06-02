@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+*.log
+project.private.config.json
+dist/
+.eslintcache
+Thumbs.db
+nul

@@ -1,0 +1,98 @@
+<view class="container">
+  <view class="product-list">
+    <view class="product-item" wx:for="{{products}}" wx:key="_id">
+      <view class="product-left" bindtap="editProduct" data-id="{{item._id}}">
+        <view class="product-emoji" style="background: {{item.color || '#E74C3C'}}">{{item.emoji || '🍒'}}</view>
+      </view>
+      <view class="product-middle" bindtap="editProduct" data-id="{{item._id}}">
+        <text class="product-name">{{item.name}}</text>
+        <text class="product-specs">{{item.specifications ? item.specifications.length : 0}}个规格</text>
+      </view>
+      <view class="product-right">
+        <view class="action-buttons">
+          <view class="action-btn" bindtap="toggleStatus" data-id="{{item._id}}" data-status="{{item.status}}">
+            <text>{{item.status === 'active' ? '下架' : '上架'}}</text>
+          </view>
+          <view class="action-btn delete" bindtap="deleteProduct" data-id="{{item._id}}">
+            <text>删除</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{products.length === 0 && !loading}}">
+    <text class="empty-icon">📦</text>
+    <text class="empty-text">暂无商品</text>
+  </view>
+
+  <view class="add-btn" bindtap="showAddModal">
+    <text class="add-icon">+</text>
+  </view>
+
+  <view class="modal-overlay" wx:if="{{showModal}}" bindtap="hideModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">{{editingProduct ? '编辑商品' : '添加商品'}}</text>
+        <view class="modal-close" bindtap="hideModal">
+          <text>×</text>
+        </view>
+      </view>
+      <view class="modal-body">
+        <view class="preview-section">
+          <view class="preview-emoji" style="background: {{form.color}}">{{form.emoji}}</view>
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">商品名称</text>
+          <input class="form-input" placeholder="请输入商品名称" value="{{form.name}}" bindinput="onInput" data-field="name" />
+        </view>
+        
+        <view class="form-group">
+          <text class="form-label">商品描述（可选）</text>
+          <textarea class="form-textarea" placeholder="简单描述一下这个商品" value="{{form.description}}" bindinput="onInput" data-field="description" />
+        </view>
+        
+        <view class="form-row">
+          <view class="form-half">
+            <text class="form-label">商品图标</text>
+            <picker mode="selector" range="{{emojiOptions}}" value="{{emojiIndex}}" bindchange="onEmojiChange">
+              <view class="picker">
+                <text class="picker-emoji">{{emojiOptions[emojiIndex]}}</text>
+              </view>
+            </picker>
+          </view>
+          <view class="form-half">
+            <text class="form-label">背景颜色</text>
+            <picker mode="selector" range="{{colorOptions}}" value="{{colorIndex}}" bindchange="onColorChange">
+              <view class="picker color-picker">
+                <view class="color-dot" style="background: {{colorOptions[colorIndex]}}"></view>
+              </view>
+            </picker>
+          </view>
+        </view>
+
+        <view class="form-group">
+          <text class="form-label">规格设置</text>
+          <view class="size-list">
+            <view class="size-item" wx:for="{{form.sizes}}" wx:key="index">
+              <input class="size-name" placeholder="规格名称" value="{{item}}" bindinput="onSizeChange" data-index="{{index}}" />
+              <text class="price-unit">¥</text>
+              <input class="size-price" type="digit" placeholder="价格" value="{{form.prices[item]}}" bindinput="onPriceChange" data-size="{{item}}" />
+              <view class="remove-btn" wx:if="{{form.sizes.length > 1}}" bindtap="removeSize" data-index="{{index}}">
+                <text>×</text>
+              </view>
+            </view>
+          </view>
+          <view class="add-size-btn" bindtap="addSize">
+            <text>+ 添加规格</text>
+          </view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="cancel-btn" bindtap="hideModal">取消</button>
+        <button class="confirm-btn" bindtap="saveProduct">{{editingProduct ? '保存' : '添加'}}</button>
+      </view>
+    </view>
+  </view>
+</view>

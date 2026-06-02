@@ -1,0 +1,231 @@
+<view class="container">
+  <view wx:if="{{activeFarm}}" class="farm-bar" bindtap="goToFarmInfo">
+    <text class="farm-bar-icon">🏡</text>
+    <text class="farm-bar-name">{{activeFarm.name}}</text>
+    <text class="farm-bar-arrow">›</text>
+  </view>
+  <view class="top-bar">
+    <view class="top-left-group">
+      <picker mode="selector" range="{{yearRange}}" value="{{yearRange.indexOf(selectedYear)}}" bindchange="onYearChange">
+        <view class="year-picker">
+          <text class="year-text">{{selectedYear}}年</text>
+          <text class="year-arrow">▾</text>
+        </view>
+      </picker>
+      <view class="stats-toggle">
+        <text class="toggle-btn {{statsView === 'day' ? 'active' : ''}}" data-view="day" bindtap="switchStatsView">📅日</text>
+        <text class="toggle-btn {{statsView === 'week' ? 'active' : ''}}" data-view="week" bindtap="switchStatsView">📅周</text>
+      </view>
+    </view>
+    <view class="quick-create-btn" bindtap="goToCreateOrder">
+      <text class="quick-create-icon">+</text>
+      <text class="quick-create-text">新建订单</text>
+    </view>
+  </view>
+
+  <view class="stats-card">
+    <view class="stat-item">
+      <text class="stat-number">{{pendingCount}}</text>
+      <text class="stat-label">待发货</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-number">{{todayShipped}}</text>
+      <text class="stat-label">{{statsView === 'day' ? '今日发货' : '本周发货'}}</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-number">{{totalOrders}}</text>
+      <text class="stat-label">总订单</text>
+    </view>
+  </view>
+
+  <view class="filter-tabs">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="key"
+      class="tab-item {{currentTab === item.key ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="{{item.key}}"
+    >
+      <text>{{item.label}}</text>
+      <text wx:if="{{item.key === 'pending' && pendingCount > 0}}" class="tab-badge">{{pendingCount}}</text>
+    </view>
+  </view>
+
+  <view class="orders-list">
+    <view
+      wx:for="{{orders}}"
+      wx:key="_id"
+      class="order-card"
+      bindtap="showShipDetail"
+      data-order="{{item}}"
+    >
+      <view class="card-top">
+        <text class="order-no">#{{item.order_no}}</text>
+        <text class="order-status status-{{item.status}}">{{getStatusText(item.status)}}</text>
+      </view>
+      <view class="card-body">
+        <view class="card-address">
+          <text class="addr-icon">📍</text>
+          <text class="addr-text">{{item.address}}</text>
+          <view class="copy-btn" bindtap="copyAddress" data-address="{{item.address}}">
+            <text>复制</text>
+          </view>
+        </view>
+        <view class="card-summary">
+          <text class="summary-text">{{getProductSummary(item.products)}}</text>
+          <text wx:if="{{item.box_count > 1}}" class="summary-box">×{{item.box_count}}箱</text>
+        </view>
+        <view class="card-times" wx:if="{{item.created_at}}">
+          <text class="time-text">🕐 下单: {{formatTime(item.created_at)}}</text>
+          <text wx:if="{{item.shipped_at}}" class="time-text time-divider">|</text>
+          <text wx:if="{{item.shipped_at}}" class="time-text">📦 发货: {{formatTime(item.shipped_at)}}</text>
+        </view>
+      </view>
+      <view class="card-arrow">›</view>
+    </view>
+  </view>
+
+  <view wx:if="{{orders.length === 0}}" class="empty-state">
+    <text class="empty-icon">📦</text>
+    <text class="empty-text">暂无订单</text>
+    <text class="empty-hint">下拉刷新试试</text>
+  </view>
+
+  <view wx:if="{{showShipModal}}" class="modal-overlay" catchtap="hideShipDetail">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header-row">
+        <text class="modal-title">订单详情</text>
+        <view class="modal-close-btn" bindtap="hideShipDetail">✕</view>
+      </view>
+      <view class="modal-scroll">
+        <view class="modal-section">
+          <view class="info-row">
+            <text class="info-label">订单编号</text>
+            <text class="info-value">{{selectedOrder.order_no}}</text>
+          </view>
+          <view class="info-row" wx:if="{{selectedOrder.writer_name}}">
+            <text class="info-label">下单人</text>
+            <text class="info-value">{{selectedOrder.writer_name}}</text>
+          </view>
+          <view class="info-row">
+            <text class="info-label">状态</text>
+            <text class="status-tag status-{{selectedOrder.status}}">{{getStatusText(selectedOrder.status)}}</text>
+          </view>
+          <view class="info-row">
+            <text class="info-label">下单时间</text>
+            <text class="info-value">{{formatTime(selectedOrder.created_at)}}</text>
+          </view>
+          <view class="info-row" wx:if="{{selectedOrder.shipped_at}}">
+            <text class="info-label">发货时间</text>
+            <text class="info-value">{{formatTime(selectedOrder.shipped_at)}}</text>
+          </view>
+        </view>
+
+        <view class="modal-section">
+          <view class="section-title">🍒 商品信息</view>
+          <view wx:for="{{selectedOrder.products}}" wx:key="index" class="modal-product">
+            <view class="product-emoji-box" style="background: {{item.product_color || '#e74c3c'}}">
+              <text class="product-emoji">{{item.product_emoji || '🍒'}}</text>
+            </view>
+            <view class="product-detail">
+              <text class="product-name">{{item.product_name}}</text>
+              <text class="product-spec">{{item.spec_name}} {{item.weight}}</text>
+              <text class="product-price">¥{{item.unit_price}}/斤</text>
+            </view>
+            <text class="product-subtotal">¥{{item.subtotal}}</text>
+          </view>
+          <view wx:if="{{selectedOrder.discount > 0}}" class="summary-discount">
+            <text>优惠折扣</text>
+            <text>-¥{{selectedOrder.discount}}</text>
+          </view>
+          <view wx:if="{{selectedOrder.remarks}}" class="summary-remarks">
+            <text class="remarks-icon">📝</text>
+            <text>{{selectedOrder.remarks}}</text>
+          </view>
+        </view>
+
+        <view class="modal-section">
+          <view class="section-title">📍 收货地址</view>
+          <text class="address-detail">{{selectedOrder.address}}</text>
+        </view>
+
+        <view class="modal-section">
+          <view class="section-title">🚚 快递信息</view>
+          <view wx:if="{{selectedOrder.status === 'pending'}}">
+            <view class="form-group">
+              <text class="form-label">快递公司</text>
+              <input class="form-input" placeholder="输入快递公司" value="{{editingCourier}}" bindinput="onCourierInput" />
+            </view>
+            <view class="form-group">
+              <text class="form-label">快递费 (¥)</text>
+              <input class="form-input" type="digit" placeholder="输入快递费" value="{{editingShippingFee}}" bindinput="onShippingFeeInput" />
+            </view>
+          </view>
+          <view wx:else>
+            <text class="courier-display">快递：{{selectedOrder.shipping_company || selectedOrder.courier || '未记录'}}</text>
+            <text class="courier-display">运费：¥{{selectedOrder.shipping_fee}}</text>
+          </view>
+        </view>
+
+        <view class="modal-section">
+          <view class="section-title">📸 照片</view>
+          <view wx:if="{{selectedOrder.status === 'pending'}}" class="photo-row">
+            <view class="photo-item">
+              <text class="photo-label">水果照片</text>
+              <view wx:if="{{!photoFruit}}" class="photo-upload" bindtap="choosePhoto" data-type="fruit">
+                <text class="photo-icon">+</text>
+                <text class="photo-hint">拍照/相册</text>
+              </view>
+              <view wx:else class="photo-preview-wrap" bindtap="previewPhoto" data-url="{{photoFruit}}">
+                <image src="{{photoFruit}}" class="photo-preview" mode="aspectFill" />
+                <view class="photo-delete" catchtap="deletePhoto" data-type="fruit">×</view>
+              </view>
+            </view>
+            <view class="photo-item">
+              <text class="photo-label">订单截图</text>
+              <view wx:if="{{!photoOrder}}" class="photo-upload" bindtap="choosePhoto" data-type="order">
+                <text class="photo-icon">+</text>
+                <text class="photo-hint">拍照/相册</text>
+              </view>
+              <view wx:else class="photo-preview-wrap" bindtap="previewPhoto" data-url="{{photoOrder}}">
+                <image src="{{photoOrder}}" class="photo-preview" mode="aspectFill" />
+                <view class="photo-delete" catchtap="deletePhoto" data-type="order">×</view>
+              </view>
+            </view>
+          </view>
+          <view wx:elif="{{selectedOrder.photo_fruit || selectedOrder.photo_order}}" class="photo-row">
+            <view class="photo-item" wx:if="{{selectedOrder.photo_fruit}}">
+              <text class="photo-label">水果照片</text>
+              <view class="photo-preview-wrap" bindtap="previewPhoto" data-url="{{selectedOrder.photo_fruit}}">
+                <image src="{{selectedOrder.photo_fruit}}" class="photo-preview" mode="aspectFill" />
+              </view>
+            </view>
+            <view class="photo-item" wx:if="{{selectedOrder.photo_order}}">
+              <text class="photo-label">订单截图</text>
+              <view class="photo-preview-wrap" bindtap="previewPhoto" data-url="{{selectedOrder.photo_order}}">
+                <image src="{{selectedOrder.photo_order}}" class="photo-preview" mode="aspectFill" />
+              </view>
+            </view>
+          </view>
+          <view wx:else class="no-photo">
+            <text>暂无照片</text>
+          </view>
+        </view>
+
+        <view class="modal-total">
+          <text>合计</text>
+          <text class="total-price">¥{{selectedOrder.total}}</text>
+        </view>
+
+        <view wx:if="{{selectedOrder.status === 'pending'}}" class="modal-footer">
+          <view class="ship-btn {{isShipping ? 'shipping' : ''}}" bindtap="submitShip">
+            <text wx:if="{{!isShipping}}">✅ 确认发货</text>
+            <text wx:else>⏳ 发货中...</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

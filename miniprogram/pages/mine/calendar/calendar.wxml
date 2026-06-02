@@ -1,0 +1,2 @@
+<view>Hello from calendar page</view>
+<view bindtap="goBack">‹ 返回</view>

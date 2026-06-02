@@ -1,0 +1,28 @@
+.placeholder-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.placeholder-text {
+  display: block;
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.placeholder-hint {
+  display: block;
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 24px;
+}
+
+.back-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #E74C3C;
+  color: #ffffff;
+  border-radius: 8px;
+}

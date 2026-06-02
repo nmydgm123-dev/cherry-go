@@ -1,0 +1,2 @@
+<view>Hello from revenue page</view>
+<view bindtap="goBack">‹ 返回</view>

@@ -1,0 +1,173 @@
+.container {
+  padding: 16px;
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+.info-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.order-basic {
+  margin-bottom: 12px;
+}
+
+.order-no {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.order-time {
+  display: block;
+  font-size: 13px;
+  color: #999;
+}
+
+.product-list {
+  padding-top: 12px;
+  border-top: 1px solid #f5f5f5;
+}
+
+.product-item {
+  padding: 6px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.upload-section {
+  margin-bottom: 16px;
+}
+
+.upload-section:last-child {
+  margin-bottom: 0;
+}
+
+.upload-label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.upload-area {
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  background: #fafafa;
+}
+
+.upload-icon {
+  display: block;
+  font-size: 36px;
+  color: #ccc;
+  margin-bottom: 8px;
+}
+
+.upload-text {
+  font-size: 14px;
+  color: #999;
+}
+
+.photo-preview {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.picker {
+  padding: 12px 16px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: #ffffff;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.submit-btn {
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+  background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 24px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.submit-btn[disabled] {
+  background: #ddd;
+  color: #999;
+}

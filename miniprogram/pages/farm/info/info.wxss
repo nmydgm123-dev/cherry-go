@@ -1,0 +1,61 @@
+.page { min-height: 100vh; background: #f5f5f5; }
+
+.page-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; background: #fff; border-bottom: 1px solid #eee;
+}
+.back-btn { padding: 4px 8px; font-size: 15px; color: #e74c3c; }
+.placeholder { visibility: hidden; }
+.page-title { font-size: 16px; font-weight: 600; color: #333; }
+
+.content { padding: 16px; }
+
+.empty-state { text-align: center; padding: 60px 0; }
+.empty-icon { font-size: 48px; display: block; margin-bottom: 8px; }
+.empty-text { font-size: 14px; color: #999; display: block; margin-bottom: 16px; }
+.primary-btn {
+  display: inline-block; padding: 12px 32px; background: #e74c3c; color: #fff;
+  border-radius: 8px; font-size: 14px;
+}
+
+.tab-bar { display: flex; background: #fff; border-radius: 10px; margin-bottom: 16px; overflow: hidden; }
+.tab { flex: 1; text-align: center; padding: 12px; font-size: 14px; color: #666; }
+.tab.active { color: #e74c3c; font-weight: 600; background: #fff5f5; }
+
+.card { background: #fff; border-radius: 14px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.farm-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; }
+.farm-info { flex: 1; }
+.farm-name { display: block; font-size: 15px; font-weight: 600; color: #333; }
+.farm-role { display: block; font-size: 12px; color: #999; margin-top: 2px; }
+.farm-check {
+  width: 24px; height: 24px; border-radius: 50%; border: 2px solid #ddd;
+  display: flex; align-items: center; justify-content: center;
+}
+.farm-check.checked { background: #e74c3c; border-color: #e74c3c; color: #fff; font-size: 14px; font-weight: 600; }
+.farm-actions { padding-top: 8px; border-top: 1px solid #f0f0f0; margin-top: 8px; }
+.action-btn { font-size: 13px; padding: 4px 8px; border-radius: 4px; }
+.action-btn.danger { color: #e74c3c; }
+
+.add-btn {
+  text-align: center; padding: 14px; color: #e74c3c; font-size: 14px; font-weight: 600;
+  background: #fff; border-radius: 14px; border: 2px dashed #e74c3c;
+}
+
+.detail-card {}
+.detail-row { padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
+.detail-row:last-child { border-bottom: none; }
+.detail-lbl { display: block; font-size: 12px; color: #999; margin-bottom: 4px; }
+.detail-val { display: block; font-size: 15px; color: #333; font-weight: 500; }
+.invite-row { display: flex; align-items: center; justify-content: space-between; }
+.invite-code-area { display: flex; align-items: center; gap: 8px; }
+.invite-code { font-size: 24px; font-weight: 700; color: #e74c3c; letter-spacing: 4px; }
+.copy-hint { font-size: 12px; color: #999; }
+
+.member-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; }
+.member-name { font-size: 14px; color: #333; }
+.member-role { font-size: 12px; color: #999; }
+
+.load-detail-btn {
+  text-align: center; padding: 12px; color: #3498db; font-size: 14px;
+  background: #fff; border-radius: 10px; margin-top: 8px;
+}

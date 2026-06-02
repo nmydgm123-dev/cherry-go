@@ -1,0 +1,19 @@
+{
+  "extends": "@dcloudio/uni-app/uts/tsconfig",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": [
+      "@dcloudio/types",
+      "@types/wechat-miniprogram"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue"
+  ]
+}

@@ -1,0 +1,10 @@
+<view class="container">
+  <view class="section-title">物流跟踪</view>
+  <view class="placeholder-card">
+    <text class="placeholder-text">物流跟踪页面</text>
+    <text class="placeholder-hint">查看物流时间轴</text>
+    <view class="back-btn" bindtap="goBack">
+      <text>返回</text>
+    </view>
+  </view>
+</view>

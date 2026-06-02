@@ -1,0 +1,26 @@
+.page { min-height: 100vh; background: #f5f5f5; }
+
+.page-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; background: #fff; border-bottom: 1px solid #eee;
+}
+.back-btn { padding: 4px 8px; font-size: 15px; color: #e74c3c; }
+.placeholder { visibility: hidden; }
+.page-title { font-size: 16px; font-weight: 600; color: #333; }
+
+.content { padding: 24px 16px; }
+
+.card { background: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.field-label { display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px; }
+.field-input {
+  width: 100%; padding: 12px 14px; background: #f8f8f8; border-radius: 8px;
+  font-size: 16px; border: 1px solid #eee; box-sizing: border-box;
+}
+.code-input { letter-spacing: 4px; font-size: 20px; text-align: center; font-weight: 600; }
+.field-hint { display: block; font-size: 12px; color: #999; margin-top: 8px; }
+
+.submit-btn {
+  margin-top: 24px; padding: 14px; background: #3498db; color: #fff;
+  text-align: center; border-radius: 10px; font-size: 16px; font-weight: 600;
+}
+.submit-btn.disabled { opacity: 0.5; }

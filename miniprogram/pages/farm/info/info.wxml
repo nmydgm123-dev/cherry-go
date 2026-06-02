@@ -1,0 +1,79 @@
+<view class="page">
+  <view class="page-header">
+    <view class="back-btn" bindtap="goBack">‹ 返回</view>
+    <text class="page-title">果园信息</text>
+    <view class="back-btn placeholder"></view>
+  </view>
+
+  <view class="content">
+    <view wx:if="{{farmList.length === 0}}" class="empty-state">
+      <text class="empty-icon">🏡</text>
+      <text class="empty-text">还没有果园</text>
+      <view class="primary-btn" bindtap="goToEntry">创建或加入果园</view>
+    </view>
+
+    <view wx:else>
+      <view class="tab-bar">
+        <view class="tab {{activeTab === 'list' ? 'active' : ''}}" bindtap="switchTab" data-tab="list">果园列表</view>
+        <view class="tab {{activeTab === 'detail' ? 'active' : ''}}" bindtap="switchTab" data-tab="detail">当前果园</view>
+      </view>
+
+      <view wx:if="{{activeTab === 'list'}}">
+        <view class="card" wx:for="{{farmList}}" wx:key="_id">
+          <view class="farm-row" bindtap="selectFarm" data-id="{{item._id}}">
+            <view class="farm-info">
+              <text class="farm-name">{{item.name}}</text>
+              <text class="farm-role">{{item.role === 'owner' ? '果园主' : '成员'}}</text>
+            </view>
+            <view class="farm-check {{item._id === currentFarm._id ? 'checked' : ''}}">
+              <text wx:if="{{item._id === currentFarm._id}}">✓</text>
+            </view>
+          </view>
+          <view wx:if="{{item.role === 'owner'}}" class="farm-actions">
+            <text class="action-btn danger" bindtap="deleteFarm" data-id="{{item._id}}">删除</text>
+          </view>
+        </view>
+
+        <view class="add-btn" bindtap="goToCreate">+ 创建新果园</view>
+      </view>
+
+      <view wx:if="{{activeTab === 'detail'}}">
+        <view wx:if="{{!currentFarm}}" class="empty-state">
+          <text class="empty-text">请先选择一个果园</text>
+        </view>
+
+        <view wx:else>
+          <view class="card detail-card">
+            <view class="detail-row">
+              <text class="detail-lbl">果园名称</text>
+              <text class="detail-val">{{currentFarm.name}}</text>
+            </view>
+            <view class="detail-row">
+              <text class="detail-lbl">你的角色</text>
+              <text class="detail-val">{{currentFarm.role === 'owner' ? '果园主' : '成员'}}</text>
+            </view>
+            <view class="detail-row invite-row" bindtap="copyInviteCode">
+              <text class="detail-lbl">邀请码</text>
+              <view class="invite-code-area">
+                <text class="invite-code">{{farmDetail.invite_code || '---'}}</text>
+                <text class="copy-hint">点击复制</text>
+              </view>
+            </view>
+            <view class="detail-row" wx:if="{{farmDetail && farmDetail.members}}">
+              <text class="detail-lbl">成员 ({{farmDetail.members.length}}人)</text>
+            </view>
+            <view wx:for="{{farmDetail.members || []}}" wx:key="openid" class="member-row">
+              <text class="member-name">{{item.nickname}}</text>
+              <text class="member-role">{{item.role === 'owner' ? '果园主' : '成员'}}</text>
+            </view>
+          </view>
+
+          <view class="load-detail-btn" bindtap="loadFarmDetail" data-id="{{currentFarm._id}}">
+            <text wx:if="{{!loading}}">加载详情</text>
+            <text wx:else>加载中...</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

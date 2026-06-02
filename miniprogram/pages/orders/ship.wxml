@@ -1,0 +1,74 @@
+<view class="container">
+  <!-- 订单信息 -->
+  <view class="info-card">
+    <view class="card-title">📦 订单信息</view>
+    <view class="order-basic">
+      <text class="order-no">{{order.order_no}}</text>
+      <text class="order-time">{{order.receiver_name}} {{order.receiver_phone}}</text>
+    </view>
+    <view class="product-list">
+      <view class="product-item" wx:for="{{order.products}}" wx:key="index">
+        <text>{{item.product_name}} {{item.spec_name}} x{{item.quantity}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 上传照片区域 -->
+  <view class="info-card">
+    <view class="card-title">📸 照片上传（必填）</view>
+    
+    <!-- 水果照片 -->
+    <view class="upload-section">
+      <text class="upload-label">水果照片</text>
+      <view class="upload-area" wx:if="{{!photoFruit}}" bindtap="choosePhoto" data-type="fruit">
+        <text class="upload-icon">+</text>
+        <text class="upload-text">点击拍摄或选择照片</text>
+      </view>
+      <view class="photo-preview" wx:else bindtap="previewPhoto" data-url="{{photoFruit}}">
+        <image src="{{photoFruit}}" mode="aspectFill" class="preview-img" />
+        <view class="delete-btn" catchtap="deletePhoto" data-type="fruit">
+          <text>×</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 订单截图 -->
+    <view class="upload-section">
+      <text class="upload-label">订单截图</text>
+      <view class="upload-area" wx:if="{{!photoOrder}}" bindtap="choosePhoto" data-type="order">
+        <text class="upload-icon">+</text>
+        <text class="upload-text">点击上传订单截图</text>
+      </view>
+      <view class="photo-preview" wx:else bindtap="previewPhoto" data-url="{{photoOrder}}">
+        <image src="{{photoOrder}}" mode="aspectFill" class="preview-img" />
+        <view class="delete-btn" catchtap="deletePhoto" data-type="order">
+          <text>×</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 物流信息 -->
+  <view class="info-card">
+    <view class="card-title">🚚 物流信息</view>
+    
+    <view class="form-group">
+      <text class="form-label">快递公司</text>
+      <picker mode="selector" range="{{shippingCompanies}}" value="{{companyIndex}}" bindchange="onCompanyChange">
+        <view class="picker">
+          {{shippingCompanies[companyIndex] || '请选择快递公司'}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">快递单号</text>
+      <input class="form-input" placeholder="请输入快递单号" value="{{trackingNo}}" bindinput="onTrackingNoInput" />
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="bottom-bar">
+    <button class="submit-btn" bindtap="submitShip" disabled="{{!canSubmit}}">确认发货</button>
+  </view>
+</view>

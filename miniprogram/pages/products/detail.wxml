@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="product-header" wx:if="{{product}}">
+    <view class="product-emoji" style="background: {{product.color || '#E74C3C'}}">{{product.emoji || '🍒'}}</view>
+    <view class="product-info">
+      <text class="product-name">{{product.name}}</text>
+      <text class="product-desc">{{product.description}}</text>
+    </view>
+  </view>
+
+  <view class="specs-section" wx:if="{{product}}">
+    <view class="section-title">选择规格</view>
+    <view class="specs-list">
+      <view class="spec-item" wx:for="{{product.specifications}}" wx:key="_id" bindtap="selectSpec" data-index="{{index}}">
+        <view class="spec-left">
+          <text class="spec-name">{{item.name}}</text>
+          <text class="spec-weight">{{item.weight}}</text>
+        </view>
+        <view class="spec-right">
+          <text class="spec-price">¥{{item.price}}</text>
+          <text class="spec-stock">库存 {{item.stock}}</text>
+        </view>
+        <view class="spec-check {{selectedSpec === index ? 'active' : ''}}"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{!product}}">
+    <text class="empty-icon">📦</text>
+    <text class="empty-text">商品不存在</text>
+  </view>
+
+  <view class="bottom-bar" wx:if="{{product}}">
+    <view class="price-info">
+      <text class="price-label">合计</text>
+      <text class="price-value">¥{{totalPrice}}</text>
+    </view>
+    <button class="order-btn" bindtap="createOrder" disabled="{{selectedSpec === null}}">立即下单</button>
+  </view>
+</view>

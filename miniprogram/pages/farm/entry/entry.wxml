@@ -1,0 +1,25 @@
+<view class="page">
+  <view class="content">
+    <view class="logo-area">
+      <text class="logo-emoji">🍒</text>
+      <text class="logo-title">CherryGo</text>
+      <text class="logo-desc">选择你的果园</text>
+    </view>
+
+    <view class="action-card create-card" bindtap="goToCreate">
+      <text class="action-icon">🆕</text>
+      <text class="action-title">创建果园</text>
+      <text class="action-desc">创建一个新的果园，生成邀请码</text>
+    </view>
+
+    <view class="action-card join-card" bindtap="goToJoin">
+      <text class="action-icon">🔑</text>
+      <text class="action-title">加入果园</text>
+      <text class="action-desc">输入邀请码，加入已有果园</text>
+    </view>
+
+    <view wx:if="{{hasFarms}}" class="skip-btn" bindtap="skipToHome">
+      <text>已有果园，直接进入 ›</text>
+    </view>
+  </view>
+</view>

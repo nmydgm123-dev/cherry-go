@@ -1,0 +1,53 @@
+<view class="page">
+  <view class="page-header">
+    <view class="back-btn" bindtap="goBack">‹ 返回</view>
+    <text class="page-title">营收统计</text>
+    <view class="back-btn placeholder"></view>
+  </view>
+
+  <view class="content">
+    <view class="card date-card">
+      <text class="card-title">选择时间范围（依发货时间）</text>
+      <view class="date-row">
+        <picker mode="date" value="{{startDate}}" bindchange="onStartChange">
+          <view class="date-picker">
+            <text class="date-lbl">起</text>
+            <text class="date-val">{{startDate}}</text>
+          </view>
+        </picker>
+        <text class="date-sep">~</text>
+        <picker mode="date" value="{{endDate}}" bindchange="onEndChange">
+          <view class="date-picker">
+            <text class="date-lbl">止</text>
+            <text class="date-val">{{endDate}}</text>
+          </view>
+        </picker>
+        <view class="query-btn" bindtap="doQuery">
+          <text wx:if="{{!loading}}">查询</text>
+          <text wx:else>...</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{revenueData}}" class="card result-card">
+      <view class="result-item">
+        <text class="result-number">¥{{revenueData.total_revenue}}</text>
+        <text class="result-label">总收入</text>
+      </view>
+      <view class="result-divider"></view>
+      <view class="result-item">
+        <text class="result-number">{{revenueData.order_count}}</text>
+        <text class="result-label">订单数</text>
+      </view>
+      <view class="result-divider"></view>
+      <view class="result-item">
+        <text class="result-number">¥{{revenueData.avg_revenue}}</text>
+        <text class="result-label">平均每单</text>
+      </view>
+    </view>
+
+    <view wx:else class="card hint-card">
+      <text class="hint-text">选择日期后点击查询</text>
+    </view>
+  </view>
+</view>

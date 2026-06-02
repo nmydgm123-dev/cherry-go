@@ -1,0 +1,35 @@
+<view class="page">
+  <view class="page-header">
+    <view class="back-btn" bindtap="goBack">‹ 返回</view>
+    <text class="page-title">发货日历</text>
+    <view class="back-btn placeholder"></view>
+  </view>
+
+  <view class="content">
+    <view class="cal-card">
+      <view class="cal-nav-row">
+        <view class="nav-btn" bindtap="prevYear">‹‹</view>
+        <view class="nav-btn" bindtap="prevMonth">‹</view>
+        <text class="cal-title">{{calYear}}年 {{monthName(calMonth)}}</text>
+        <view class="nav-btn" bindtap="nextMonth">›</view>
+        <view class="nav-btn" bindtap="nextYear">››</view>
+      </view>
+
+      <view class="cal-weekdays">
+        <text wx:for="{{dayNames}}" wx:key="index" class="cal-weekday">{{item}}</text>
+      </view>
+
+      <view class="cal-grid">
+        <view wx:for="{{calendarDays}}" wx:key="index" class="cal-cell {{item.isEmpty ? 'empty' : ''}} {{item.hasShip ? 'ship' : ''}}">
+          <text wx:if="{{!item.isEmpty}}" class="cal-day">{{item.day}}</text>
+          <text wx:if="{{item.hasShip}}" class="cal-icon">📦</text>
+        </view>
+      </view>
+
+      <view class="cal-legend">
+        <text class="legend-icon">📦</text>
+        <text class="legend-text">有发货记录</text>
+      </view>
+    </view>
+  </view>
+</view>

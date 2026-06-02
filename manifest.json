@@ -1,0 +1,29 @@
+{
+  "name": "CherryGo",
+  "appid": "__UNI__CHERRYGO",
+  "description": "农产品销售管理小程序",
+  "versionName": "1.0.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "mp-weixin": {
+    "appid": "wxa57dbca9d15c9e2b",
+    "setting": {
+      "urlCheck": false,
+      "es6": true,
+      "postcss": true,
+      "minified": true
+    },
+    "usingComponents": true,
+    "permission": {
+      "scope.userLocation": {
+        "desc": "用于添加照片水印"
+      }
+    },
+    "requiredPrivateInfos": ["getLocation"],
+    "cloudfunctionTemplateRoot": "cloudfunctions/",
+    "lazyCodeLoading": "requiredComponents"
+  },
+  "uniCloud": {
+    "provider": "tencent"
+  }
+}

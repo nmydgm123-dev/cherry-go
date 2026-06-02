@@ -1,0 +1,100 @@
+<view class="container">
+  <!-- 订单状态头部 -->
+  <view class="status-header status-{{order.status}}">
+    <text class="status-icon">{{getStatusIcon(order.status)}}</text>
+    <text class="status-text">{{getStatusText(order.status)}}</text>
+  </view>
+
+  <!-- 订单号 -->
+  <view class="info-card">
+    <view class="info-row">
+      <text class="info-label">订单编号</text>
+      <text class="info-value">{{order.order_no}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">下单时间</text>
+      <text class="info-value">{{formatTime(order.created_at)}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.shipped_at}}">
+      <text class="info-label">发货时间</text>
+      <text class="info-value">{{formatTime(order.shipped_at)}}</text>
+    </view>
+  </view>
+
+  <!-- 收货地址 -->
+  <view class="info-card">
+    <view class="card-title">📦 收货地址</view>
+    <view class="address-info">
+      <text class="receiver">{{order.receiver_name}} {{order.receiver_phone}}</text>
+      <text class="address">{{order.province}}{{order.city}}{{order.district}}{{order.address}}</text>
+    </view>
+  </view>
+
+  <!-- 商品信息 -->
+  <view class="info-card">
+    <view class="card-title">🍒 商品信息</view>
+    <view class="product-item" wx:for="{{order.products}}" wx:key="index">
+      <view class="product-basic">
+        <text class="product-name">{{item.product_name}}</text>
+        <text class="product-spec">{{item.spec_name}}</text>
+      </view>
+      <view class="product-price">
+        <text class="price">¥{{item.unit_price}}</text>
+        <text class="quantity">x{{item.quantity}}</text>
+        <text class="subtotal">¥{{item.subtotal}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 物流信息 -->
+  <view class="info-card" wx:if="{{order.status === 'shipped' || order.status === 'delivered'}}">
+    <view class="card-title">🚚 物流信息</view>
+    <view class="logistics-info">
+      <text class="company">{{order.shipping_company}}</text>
+      <text class="tracking-no">{{order.tracking_no}}</text>
+    </view>
+    <view class="photo-section" wx:if="{{order.photo_fruit || order.photo_order}}">
+      <view class="photo-item" wx:if="{{order.photo_fruit}}">
+        <text class="photo-label">水果照片</text>
+        <image src="{{order.photo_fruit}}" mode="aspectFill" class="order-photo" />
+      </view>
+      <view class="photo-item" wx:if="{{order.photo_order}}">
+        <text class="photo-label">订单截图</text>
+        <image src="{{order.photo_order}}" mode="aspectFill" class="order-photo" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 费用明细 -->
+  <view class="info-card">
+    <view class="card-title">💰 费用明细</view>
+    <view class="fee-row">
+      <text class="fee-label">商品小计</text>
+      <text class="fee-value">¥{{order.subtotal}}</text>
+    </view>
+    <view class="fee-row">
+      <text class="fee-label">运费</text>
+      <text class="fee-value">¥{{order.shipping_fee}}</text>
+    </view>
+    <view class="fee-row" wx:if="{{order.discount > 0}}">
+      <text class="fee-label">优惠</text>
+      <text class="fee-value discount">-¥{{order.discount}}</text>
+    </view>
+    <view class="fee-row total">
+      <text class="fee-label">合计</text>
+      <text class="fee-value">¥{{order.total}}</text>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="info-card" wx:if="{{order.remarks}}">
+    <view class="card-title">📝 备注</view>
+    <text class="remarks">{{order.remarks}}</text>
+  </view>
+
+  <!-- 填写人信息 -->
+  <view class="info-card">
+    <view class="card-title">👤 订单填写</view>
+    <text class="writer-info">{{order.writer_name}}</text>
+  </view>
+</view>

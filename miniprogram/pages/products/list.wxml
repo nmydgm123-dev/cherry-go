@@ -1,0 +1,54 @@
+<view class="container">
+  <!-- 选择模式提示 -->
+  <view wx:if="{{selectMode}}" class="select-mode-bar">
+    <text class="select-title">选择商品</text>
+    <view class="cancel-btn" bindtap="cancelSelect">
+      <text>取消</text>
+    </view>
+  </view>
+
+  <!-- 商品列表 -->
+  <view class="product-list" wx:if="{{products.length > 0}}">
+    <view 
+      wx:for="{{products}}" 
+      wx:key="_id"
+      class="product-card"
+      bindtap="selectProduct"
+      data-id="{{item._id}}"
+    >
+      <view class="product-image" style="background-color: {{item.color || '#e74c3c'}}">
+        <text class="product-emoji">{{item.emoji || '🍒'}}</text>
+      </view>
+      <view class="product-info">
+        <text class="product-name">{{item.name}}</text>
+        <text class="product-desc">{{item.description || '新鲜水果，产地直发'}}</text>
+        <view class="product-footer">
+          <view class="product-price">
+            <text class="price-symbol">¥</text>
+            <text class="price-value">{{getMinPrice(item)}}</text>
+            <text class="price-unit">起</text>
+          </view>
+          <text class="product-specs">{{item.specifications ? item.specifications.length : 0}}种规格</text>
+        </view>
+      </view>
+      <view class="product-tag" wx:if="{{item.status === 'active'}}">在售</view>
+      <view wx:if="{{selectMode}}" class="select-check">
+        <text>›</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-state">
+    <text class="empty-icon">🍒</text>
+    <text class="empty-text">暂无商品</text>
+  </view>
+
+  <!-- 果园所有者配置入口 -->
+  <view 
+    wx:if="{{isOwner && !selectMode}}"
+    class="config-btn"
+    bindtap="goToConfig"
+  >
+    <text>配置商品</text>
+  </view>
+</view>

@@ -1,0 +1,49 @@
+<view class="container">
+  <!-- 搜索区域 -->
+  <view class="search-section">
+    <view class="search-box">
+      <input class="search-input" placeholder="请输入订单号或手机号后四位" value="{{searchKey}}" bindinput="onSearchInput" />
+      <button class="search-btn" bindtap="searchOrder">查询</button>
+    </view>
+  </view>
+
+  <!-- 物流信息 -->
+  <view class="logistics-card" wx:if="{{order}}">
+    <view class="logistics-header">
+      <text class="order-no">{{order.order_no}}</text>
+      <text class="status-tag status-{{order.status}}">{{getStatusText(order.status)}}</text>
+    </view>
+
+    <view class="receiver-info">
+      <text class="receiver-name">{{order.receiver_name}}</text>
+      <text class="receiver-phone">{{order.receiver_phone}}</text>
+      <text class="receiver-address">{{order.province}}{{order.city}}{{order.district}}{{order.address}}</text>
+    </view>
+
+    <!-- 物流追踪 -->
+    <view class="tracking-section" wx:if="{{order.tracking_history && order.tracking_history.length > 0}}">
+      <view class="tracking-list">
+        <view class="tracking-item" wx:for="{{order.tracking_history}}" wx:key="index">
+          <view class="tracking-dot {{index === 0 ? 'active' : ''}}"></view>
+          <view class="tracking-content">
+            <text class="tracking-status">{{item.status}}</text>
+            <text class="tracking-desc">{{item.description}}</text>
+            <text class="tracking-time">{{formatTime(item.time)}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 没有物流信息 -->
+    <view class="empty-tracking" wx:else>
+      <text class="empty-icon">🚚</text>
+      <text class="empty-text">暂无物流信息</text>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!order && hasSearched}}">
+    <text class="empty-icon">📦</text>
+    <text class="empty-text">未找到相关订单</text>
+  </view>
+</view>

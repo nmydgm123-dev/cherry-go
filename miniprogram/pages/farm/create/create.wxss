@@ -1,0 +1,60 @@
+.page { min-height: 100vh; background: #f5f5f5; }
+
+.page-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; background: #fff; border-bottom: 1px solid #eee;
+}
+.back-btn { padding: 4px 8px; font-size: 15px; color: #e74c3c; }
+.placeholder { visibility: hidden; }
+.page-title { font-size: 16px; font-weight: 600; color: #333; }
+
+.content { padding: 24px 16px; }
+
+.card { background: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.field-label { display: block; font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px; }
+.field-input {
+  width: 100%; padding: 12px 14px; background: #f8f8f8; border-radius: 8px;
+  font-size: 16px; border: 1px solid #eee; box-sizing: border-box;
+}
+
+.status-hint {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 10px; font-size: 13px;
+}
+.status-hint.success { color: #27ae60; }
+.status-hint.error { color: #e74c3c; }
+.status-hint.checking { color: #999; }
+
+.suggestions {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+.suggestions-label {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+}
+.suggestion-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.suggestion-item {
+  padding: 6px 12px;
+  background: #fff0f0;
+  color: #e74c3c;
+  font-size: 13px;
+  border-radius: 16px;
+  border: 1px solid #ffcccc;
+}
+
+.field-hint { display: block; font-size: 12px; color: #999; margin-top: 12px; }
+
+.submit-btn {
+  margin-top: 24px; padding: 14px; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color: #fff;
+  text-align: center; border-radius: 10px; font-size: 16px; font-weight: 600;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+.submit-btn.disabled { opacity: 0.5; box-shadow: none; }

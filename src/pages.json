@@ -1,0 +1,88 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "发货工作台"
+      }
+    },
+    {
+      "path": "pages/products/list",
+      "style": {
+        "navigationBarTitleText": "商品列表"
+      }
+    },
+    {
+      "path": "pages/products/detail",
+      "style": {
+        "navigationBarTitleText": "商品详情"
+      }
+    },
+    {
+      "path": "pages/products/config",
+      "style": {
+        "navigationBarTitleText": "商品配置"
+      }
+    },
+    {
+      "path": "pages/orders/create",
+      "style": {
+        "navigationBarTitleText": "创建订单"
+      }
+    },
+    {
+      "path": "pages/orders/detail",
+      "style": {
+        "navigationBarTitleText": "订单详情"
+      }
+    },
+    {
+      "path": "pages/orders/logistics",
+      "style": {
+        "navigationBarTitleText": "物流跟踪"
+      }
+    },
+    {
+      "path": "pages/orders/track",
+      "style": {
+        "navigationBarTitleText": "物流查询"
+      }
+    },
+    {
+      "path": "pages/mine/index",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "CherryGo",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#E74C3C",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "工作台"
+      },
+      {
+        "pagePath": "pages/products/list",
+        "text": "商品"
+      },
+      {
+        "pagePath": "pages/orders/create",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的"
+      }
+    ]
+  }
+}

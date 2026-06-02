@@ -1,0 +1,190 @@
+// 全局公共样式
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+page {
+  background-color: $bg-light;
+  font-size: $font-size-sm;
+  color: $text-primary;
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+view, text {
+  font-size: inherit;
+}
+
+.container {
+  padding: $spacing-lg;
+  min-height: 100vh;
+}
+
+.card {
+  background: $bg-white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-sm;
+}
+
+.section {
+  margin-bottom: $spacing-xxl;
+}
+
+.section-title {
+  font-size: $font-size-lg;
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: $spacing-lg;
+  padding-left: $spacing-sm;
+  border-left: 4px solid $primary-color;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-base $spacing-xl;
+  border-radius: $border-radius-base;
+  font-size: $font-size-base;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all $transition-fast;
+  
+  &.btn-primary {
+    background: $primary-color;
+    color: #fff;
+    
+    &:active {
+      background: darken($primary-color, 10%);
+    }
+  }
+  
+  &.btn-secondary {
+    background: $secondary-color;
+    color: #fff;
+    
+    &:active {
+      background: darken($secondary-color, 10%);
+    }
+  }
+  
+  &.btn-outline {
+    background: transparent;
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    
+    &:active {
+      background: rgba($primary-color, 0.1);
+    }
+  }
+  
+  &.btn-block {
+    width: 100%;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.tag {
+  display: inline-block;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-xs;
+  
+  &.tag-primary {
+    background: rgba($primary-color, 0.1);
+    color: $primary-color;
+  }
+  
+  &.tag-success {
+    background: rgba($success-color, 0.1);
+    color: $success-color;
+  }
+  
+  &.tag-warning {
+    background: rgba($secondary-color, 0.1);
+    color: $secondary-color;
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xxl;
+  color: $text-light;
+  
+  .empty-icon {
+    font-size: 64px;
+    margin-bottom: $spacing-lg;
+    opacity: 0.5;
+  }
+  
+  .empty-text {
+    font-size: $font-size-base;
+    text-align: center;
+  }
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xxl;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: $primary-color;
+}
+
+.text-secondary {
+  color: $text-secondary;
+}
+
+.text-light {
+  color: $text-light;
+}
+
+.mt-sm { margin-top: $spacing-sm; }
+.mt-base { margin-top: $spacing-base; }
+.mt-lg { margin-top: $spacing-lg; }
+.mt-xl { margin-top: $spacing-xl; }
+
+.mb-sm { margin-bottom: $spacing-sm; }
+.mb-base { margin-bottom: $spacing-base; }
+.mb-lg { margin-bottom: $spacing-lg; }
+.mb-xl { margin-bottom: $spacing-xl; }
+
+.p-sm { padding: $spacing-sm; }
+.p-base { padding: $spacing-base; }
+.p-lg { padding: $spacing-lg; }
+.p-xl { padding: $spacing-xl; }

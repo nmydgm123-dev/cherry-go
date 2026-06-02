@@ -1,0 +1,23 @@
+.page { min-height: 100vh; background: linear-gradient(180deg, #fff5f5 0%, #f5f5f5 100%); }
+.content { padding: 40px 24px; display: flex; flex-direction: column; align-items: center; }
+
+.logo-area { text-align: center; margin-bottom: 40px; }
+.logo-emoji { font-size: 64px; display: block; margin-bottom: 8px; }
+.logo-title { font-size: 28px; font-weight: 700; color: #e74c3c; display: block; }
+.logo-desc { font-size: 14px; color: #999; margin-top: 4px; display: block; }
+
+.action-card {
+  width: 100%; background: #fff; border-radius: 16px;
+  padding: 24px; margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.create-card { border-left: 4px solid #e74c3c; }
+.join-card { border-left: 4px solid #3498db; }
+.action-icon { font-size: 36px; display: block; margin-bottom: 8px; }
+.action-title { font-size: 18px; font-weight: 600; color: #333; display: block; margin-bottom: 4px; }
+.action-desc { font-size: 13px; color: #999; display: block; }
+
+.skip-btn {
+  margin-top: 24px; padding: 12px 24px; background: #fff;
+  border-radius: 8px; font-size: 14px; color: #999;
+}

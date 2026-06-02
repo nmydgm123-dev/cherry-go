@@ -1,0 +1,282 @@
+<view class="container">
+  <view class="step-indicator">
+    <view wx:for="{{steps}}" wx:key="index" class="step-item {{currentStep >= index ? 'active' : ''}} {{currentStep === index ? 'current' : ''}}">
+      <view class="step-number">{{index + 1}}</view>
+      <text class="step-label">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 第一步：选择商品 -->
+  <view wx:if="{{currentStep === 0}}" class="step-content">
+    <view class="section-title">已选商品 ({{selectedProducts.length}})</view>
+    
+    <!-- 商品列表 -->
+    <view class="selected-products">
+      <view wx:for="{{selectedProducts}}" wx:key="id" class="product-card">
+        <view class="product-header">
+          <view class="product-emoji" style="background: {{item.product.color || '#e74c3c'}}">{{item.product.emoji || '🍒'}}</view>
+          <view class="product-name">{{item.product.name}}</view>
+          <view class="delete-btn" bindtap="removeProduct" data-index="{{index}}">
+            <text class="delete-icon">×</text>
+          </view>
+        </view>
+        
+        <!-- 规格选择 -->
+        <view class="spec-section">
+          <text class="spec-label">规格</text>
+          <view class="spec-list">
+            <view 
+              wx:for="{{item.product.specifications}}" 
+              wx:for-item="spec"
+              wx:key="name"
+              class="spec-item {{item.spec.name === spec.name ? 'active' : ''}}"
+              bindtap="selectSpec"
+              data-index="{{index}}"
+              data-spec="{{spec}}"
+            >
+              <text>{{spec.name}}</text>
+              <text class="spec-price">¥{{spec.price}}/斤</text>
+            </view>
+          </view>
+        </view>
+        
+        <!-- 斤数选择 -->
+        <view class="weight-section">
+          <text class="weight-label">斤数</text>
+          <view class="weight-control">
+            <view class="weight-btn" bindtap="decreaseWeight" data-index="{{index}}">
+              <text>−</text>
+            </view>
+            <input 
+              class="weight-input" 
+              type="number" 
+              value="{{item.weight}}" 
+              bindinput="onWeightInput"
+              data-index="{{index}}"
+            />
+            <text class="weight-unit">斤</text>
+            <view class="weight-btn" bindtap="increaseWeight" data-index="{{index}}">
+              <text>+</text>
+            </view>
+          </view>
+          <view class="product-subtotal">
+            <text>小计: ¥{{item.spec.price * item.weight}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 添加商品按钮 -->
+    <view class="add-product-btn" bindtap="openProductList">
+      <text class="add-icon">+</text>
+      <text>添加商品</text>
+    </view>
+  </view>
+
+  <!-- 第二步：填写信息 -->
+  <view wx:if="{{currentStep === 1}}" class="step-content">
+    <view class="form-group">
+      <text class="form-label">下单人</text>
+      <input class="form-input" placeholder="输入下单人" value="{{creator}}" bindinput="onCreatorInput" />
+    </view>
+
+    <view class="section-title">快递信息</view>
+    
+    <view class="form-group">
+      <text class="form-label">选择快递</text>
+      <view class="courier-list">
+        <view 
+          wx:for="{{courierOptions}}" 
+          wx:key="index"
+          class="courier-item {{selectedCourier === item ? 'active' : ''}}"
+          bindtap="selectCourier"
+          data-index="{{index}}"
+        >
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <view wx:if="{{selectedCourier === '自定义'}}" class="form-group">
+      <text class="form-label">自定义快递</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入快递名称" 
+        value="{{customCourier}}" 
+        bindinput="onCustomCourierInput" 
+      />
+    </view>
+    
+    <view class="form-group">
+      <text class="form-label">快递费</text>
+      <input 
+        class="form-input" 
+        type="digit" 
+        placeholder="请输入快递费" 
+        value="{{shippingFee}}" 
+        bindinput="onShippingFeeInput" 
+      />
+    </view>
+    
+    <view class="form-group">
+          <text class="form-label">收货地址</text>
+          <view wx:if="{{addressHistory.length > 0}}" class="history-list">
+            <view 
+              wx:for="{{addressHistory}}" 
+              wx:key="*this" 
+              class="history-item" 
+              bindtap="selectHistoryAddress" 
+              data-address="{{item}}"
+            >
+              <text class="history-text">{{item}}</text>
+            </view>
+          </view>
+          <textarea 
+            class="form-textarea" 
+            placeholder="请粘贴或输入收货地址（包含收货人、电话、详细地址）" 
+            value="{{address}}" 
+            bindinput="onAddressInput" 
+            auto-height 
+          />
+        </view>
+
+    <view class="section-title">附加信息</view>
+
+    <view class="form-group">
+      <text class="form-label">备注（可选）</text>
+      <textarea 
+        class="form-textarea" 
+        placeholder="订单备注信息" 
+        value="{{remarks}}" 
+        bindinput="onRemarksInput" 
+        auto-height 
+      />
+    </view>
+
+    <view class="form-row">
+      <view class="form-half">
+        <text class="form-label">优惠折扣</text>
+        <input 
+          class="form-input" 
+          type="digit" 
+          placeholder="输入折扣金额" 
+          value="{{discount}}" 
+          bindinput="onDiscountInput" 
+        />
+      </view>
+      <view class="form-half">
+        <text class="form-label">发货箱数</text>
+        <input 
+          class="form-input" 
+          type="number" 
+          placeholder="输入箱数" 
+          value="{{boxCount}}" 
+          bindinput="onBoxCountInput" 
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 第三步：确认订单 -->
+  <view wx:if="{{currentStep === 2}}" class="step-content">
+    <view class="section-title">订单确认</view>
+    
+    <!-- 商品列表 -->
+    <view class="confirm-products">
+      <view wx:for="{{selectedProducts}}" wx:key="id" class="confirm-product">
+        <view class="product-emoji" style="background: {{item.product.color || '#e74c3c'}}">{{item.product.emoji || '🍒'}}</view>
+        <view class="product-info">
+          <text class="product-name">{{item.product.name}}</text>
+          <text class="product-spec">{{item.spec.name}} × {{item.weight}}斤</text>
+          <text class="product-price">¥{{item.spec.price}}/斤</text>
+        </view>
+        <view class="product-subtotal-right">
+          <text>¥{{item.spec.price * item.weight}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 费用明细 -->
+    <view class="confirm-summary">
+      <view class="summary-row">
+        <text>商品小计</text>
+        <text>¥{{totalProductsPrice}}</text>
+      </view>
+      <view class="summary-row">
+        <text>快递</text>
+        <text>{{selectedCourier === '自定义' ? customCourier : selectedCourier}}</text>
+      </view>
+      <view class="summary-row">
+        <text>快递费</text>
+        <text>¥{{shippingFee}}</text>
+      </view>
+      <view class="summary-row" wx:if="{{boxCount > 1}}">
+        <text>发货箱数</text>
+        <text>{{boxCount}}箱 (×{{boxCount}})</text>
+      </view>
+      <view class="summary-row" wx:if="{{discount > 0}}">
+        <text>优惠折扣</text>
+        <text class="discount-amount">-¥{{discount}}</text>
+      </view>
+      <view class="summary-total">
+        <text>合计</text>
+        <text class="total-price">¥{{orderTotal}}</text>
+      </view>
+    </view>
+    
+    <!-- 备注 -->
+    <view class="confirm-remarks" wx:if="{{remarks}}">
+      <text class="remarks-label">📝 备注</text>
+      <text class="remarks-text">{{remarks}}</text>
+    </view>
+    
+    <!-- 收货地址 -->
+    <view class="confirm-address">
+      <text class="address-label">收货地址</text>
+      <text class="address-text">{{address}}</text>
+    </view>
+  </view>
+
+  <!-- 商品选择弹窗 -->
+  <view wx:if="{{showProductList}}" class="modal-overlay" bindtap="closeProductList">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">选择商品</text>
+        <view class="modal-close" bindtap="closeProductList">
+          <text>×</text>
+        </view>
+      </view>
+      <view class="modal-body">
+        <view class="product-list-mini">
+          <view 
+            wx:for="{{products}}" 
+            wx:key="_id"
+            class="product-item-mini"
+            bindtap="addProduct"
+            data-product="{{item}}"
+          >
+            <view class="product-emoji-mini" style="background: {{item.color || '#e74c3c'}}">{{item.emoji || '🍒'}}</view>
+            <view class="product-info-mini">
+              <text class="product-name-mini">{{item.name}}</text>
+              <text class="product-desc-mini">{{item.description || '新鲜水果'}}</text>
+            </view>
+            <view class="add-icon">+</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="bottom-bar">
+    <view wx:if="{{currentStep > 0}}" class="prev-btn" bindtap="prevStep">
+      <text>上一步</text>
+    </view>
+    <view wx:if="{{currentStep < 2}}" class="next-btn" bindtap="nextStep">
+      <text>下一步</text>
+    </view>
+    <view wx:if="{{currentStep === 2}}" class="submit-btn" bindtap="submitOrder">
+      <text>提交订单</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,55 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/products/list",
+    "pages/products/detail",
+    "pages/products/config",
+    "pages/orders/create",
+    "pages/orders/detail",
+    "pages/orders/logistics",
+    "pages/orders/ship",
+    "pages/orders/track",
+    "pages/mine/index",
+    "pages/revenue/revenue",
+    "pages/calendar/calendar",
+    "pages/farm/entry/entry",
+    "pages/farm/create/create",
+    "pages/farm/join/join",
+    "pages/farm/info/info"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#E74C3C",
+    "navigationBarTitleText": "CherryGo",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#E74C3C",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "工作台"
+      },
+      {
+        "pagePath": "pages/products/list",
+        "text": "商品"
+      },
+      {
+        "pagePath": "pages/orders/create",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "cloud": true
+}
